@@ -7,5 +7,6 @@
         public string StudentName { get; set; }
         public int CID { get; set; }
 
+        public School.Api.Models.ClassRoom.ClassRoom? ClassRoom { get; set; }
     }
 }
