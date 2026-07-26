@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.Data;
+using School.Api.Models.Student;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,14 +14,14 @@ namespace School.Api.Controllers
 
         public StudentsController( SchoolContext db )
         {
-            
+            _db = db;
         }
         // GET: api/<StudentsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Student> Get()
         {
             //return new string[] { "value1", "value2" };
-            return _db.Students.Select(s => s.StudentName).ToArray();
+            return _db.Students.ToArray();
         }
 
         // GET api/<StudentsController>/5
