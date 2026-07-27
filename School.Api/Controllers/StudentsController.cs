@@ -34,14 +34,25 @@ namespace School.Api.Controllers
 
         // POST api/<StudentsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        [Route("UpdateStudent")]
+        public Student CreateNewStudent(Student obj)
         {
+            _db.Students.Add(obj);
+            _db.SaveChanges();
+            return obj;
         }
-
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public Student updateStudent(Student obj, int id)
         {
+            var StudentData = _db.Students.FirstOrDefault(x => x.StudentID == obj.StudentID);
+            StudentData.StudentName = obj.StudentName;
+            StudentData.Age = obj.Age;
+            StudentData.CID = obj.CID;
+            StudentData.ClassRoom = obj.ClassRoom;
+            StudentData.StudentID = obj.StudentID;
+            _db.SaveChanges();
+            return obj;
         }
 
         // DELETE api/<StudentsController>/5
