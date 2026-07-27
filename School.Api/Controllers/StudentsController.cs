@@ -40,14 +40,32 @@ namespace School.Api.Controllers
 
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+       
+        public IActionResult GetStudentById(int id)
         {
-            return "value";
+            var student = _db.Students
+                .Include(s => s.ClassRoom)
+                .Select(s => new
+                {
+                    StudentID = s.StudentID,
+                    StudentName = s.StudentName,
+                    Age = s.Age,
+                    ClassName = s.ClassRoom.ClassName
+
+                })
+                .FirstOrDefault(s => s.StudentID == id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(student);
         }
 
         // POST api/<StudentsController>
         [HttpPost]
-        [Route("UpdateStudent")]
+        [Route("Create")]
         public Student CreateNewStudent(Student obj)
         {
             _db.Students.Add(obj);
@@ -56,7 +74,8 @@ namespace School.Api.Controllers
         }
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        public Student updateStudent(Student obj, int id)
+        [Route("Update")]
+        public Student UpdateStudent(Student obj, int id)
         {
             var StudentData = _db.Students.FirstOrDefault(x => x.StudentID == obj.StudentID);
             StudentData.StudentName = obj.StudentName;
