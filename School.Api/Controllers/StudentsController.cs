@@ -83,18 +83,24 @@ namespace School.Api.Controllers
 
 
         // PUT api/<StudentsController>/5
-        [HttpPut("{id}")]
-
-        public Student UpdateStudent(Student obj, int id)
+       
+        [HttpPatch("{id}")]
+        public IActionResult UpdateStudent(int id, Student obj)
         {
-            var StudentData = _db.Students.FirstOrDefault(x => x.StudentID == obj.StudentID);
-            StudentData.StudentName = obj.StudentName;
-            StudentData.Age = obj.Age;
-            StudentData.CID = obj.CID;
-            StudentData.ClassRoom = obj.ClassRoom;
-            StudentData.StudentID = obj.StudentID;
+            var studentData = _db.Students.FirstOrDefault(s => s.StudentID == id);
+
+            if (studentData == null)
+            {
+                return NotFound();
+            }
+
+            studentData.StudentName = obj.StudentName;
+            studentData.Age = obj.Age;
+            studentData.CID = obj.CID;
+
             _db.SaveChanges();
-            return obj;
+
+            return Ok(studentData);
         }
 
         // DELETE api/<StudentsController>/5
