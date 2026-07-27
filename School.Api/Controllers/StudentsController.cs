@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using School.Api.Data;
 using School.Api.Models.Student;
 
@@ -17,12 +18,24 @@ namespace School.Api.Controllers
             _db = db;
         }
         // GET: api/<StudentsController>
+        //(Read)
         [HttpGet]
         [Route("GetAllStudents")]
-        public IEnumerable<Student> Get()
+        public IActionResult Get()
         {
-            //return new string[] { "value1", "value2" };
-            return _db.Students.ToArray();
+            var students = _db.Students
+                .Include(s => s.ClassRoom)
+                .Select(s => new
+                {
+                    s.StudentID,
+                    s.StudentName,
+                    s.Age,
+                    s.CID,
+                    ClassName = s.ClassRoom.ClassName
+                })
+                .ToList();
+
+            return Ok(students);
         }
 
         // GET api/<StudentsController>/5

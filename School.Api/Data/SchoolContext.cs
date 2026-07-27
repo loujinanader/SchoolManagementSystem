@@ -11,8 +11,8 @@ namespace School.Api.Data
         {
 
         }
-        public DbSet<Student> Students { get; set; } = null!;
-        public DbSet<ClassRoom> ClassRooms { get; set; } = null!;
+        public DbSet<Student> Students { get; set; } 
+        public DbSet<ClassRoom> ClassRooms { get; set; }
 
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -21,19 +21,35 @@ namespace School.Api.Data
 
         //}
 
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{   
+        //    base.OnModelCreating(modelBuilder);
+        //    modelBuilder.Entity<ClassRoom>()
+        //        .HasMany<Student>(c => c.Students)
+        //        .WithOne(s => s.ClassRoom)
+        //        .HasForeignKey(s => s.CID);
+        //    modelBuilder.Entity<Student>()
+        //        .HasOne<ClassRoom>(s => s.ClassRoom)
+        //        .WithMany(c => c.Students)
+        //        .HasForeignKey(s => s.CID);
+        //    modelBuilder.Entity<Student>().HasKey(s => s.StudentID);
+        //    modelBuilder.Entity<ClassRoom>().HasKey(c => c.ClassId);
+        //}
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {   
+        {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<ClassRoom>()
-                .HasMany<Student>(c => c.Students)
-                .WithOne(s => s.ClassRoom)
-                .HasForeignKey(s => s.CID);
+
             modelBuilder.Entity<Student>()
-                .HasOne<ClassRoom>(s => s.ClassRoom)
+                .HasKey(s => s.StudentID);
+
+            modelBuilder.Entity<ClassRoom>()
+                .HasKey(c => c.ClassId);
+
+            modelBuilder.Entity<Student>()
+                .HasOne(s => s.ClassRoom)
                 .WithMany(c => c.Students)
-                .HasForeignKey(s => s.CID);
-            modelBuilder.Entity<Student>().HasKey(s => s.StudentID);
-            modelBuilder.Entity<ClassRoom>().HasKey(c => c.ClassId);
+                .HasForeignKey(c => c.CID);
         }
 
     }
