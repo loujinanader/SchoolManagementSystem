@@ -18,6 +18,7 @@ namespace School.Api.Controllers
         }
         // GET: api/<StudentsController>
         [HttpGet]
+        [Route("GetAllStudents")]
         public IEnumerable<Student> Get()
         {
             //return new string[] { "value1", "value2" };
