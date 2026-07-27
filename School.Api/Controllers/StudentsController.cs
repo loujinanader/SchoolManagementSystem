@@ -13,7 +13,7 @@ namespace School.Api.Controllers
     {
         private readonly SchoolContext _db;
 
-        public StudentsController( SchoolContext db )
+        public StudentsController(SchoolContext db)
         {
             _db = db;
         }
@@ -37,10 +37,10 @@ namespace School.Api.Controllers
 
             return Ok(students);
         }
-
+        //(Read)
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
-       
+
         public IActionResult GetStudentById(int id)
         {
             var student = _db.Students
@@ -63,18 +63,28 @@ namespace School.Api.Controllers
             return Ok(student);
         }
 
+
+
+        //create
         // POST api/<StudentsController>
         [HttpPost]
         [Route("Create")]
-        public Student CreateNewStudent(Student obj)
+        public IActionResult CreateStudent(Student student)
         {
-            _db.Students.Add(obj);
+            _db.Students.Add(student);
             _db.SaveChanges();
-            return obj;
+
+            return Ok(student);
         }
+
+
+
+
+
+
         // PUT api/<StudentsController>/5
         [HttpPut("{id}")]
-        [Route("Update")]
+
         public Student UpdateStudent(Student obj, int id)
         {
             var StudentData = _db.Students.FirstOrDefault(x => x.StudentID == obj.StudentID);
@@ -89,8 +99,18 @@ namespace School.Api.Controllers
 
         // DELETE api/<StudentsController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult DeleteStudent(int id)
         {
+            var student = _db.Students.FirstOrDefault(s => s.StudentID == id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _db.Students.Remove(student);
+            _db.SaveChanges();
+
+            return Ok(student);
         }
     }
 }
