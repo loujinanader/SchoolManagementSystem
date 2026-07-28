@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using School.Api.Data;
 using School.Api.Models.Student;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -54,14 +52,12 @@ namespace School.Api.Controllers
 
         //create
         // POST api/<StudentsController>
-        [HttpPost]
-        [Route("Create")]
         public IActionResult CreateStudent(Student student)
         {
-            _repository.CreateStudent(student);
-            return Ok(student);
-        }
+            var createdStudent = _repository.CreateStudent(student);
 
+            return Ok(createdStudent);
+        }
 
 
 
