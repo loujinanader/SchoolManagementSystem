@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 namespace School.Api.Models.Student
 {
-    public class Student
+    public class Student : IStudentRepository
     { //[Age],[StudentId],[StudentName],[CID]
         public int Age { get; set; }
         public int StudentID { get; set; }
