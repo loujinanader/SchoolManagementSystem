@@ -1,4 +1,8 @@
 ﻿using System;
+using School.Api.Models;
+using School.Api.Repository;
+using School.Api.Services;
+
 
 public class StudentRepository : IStudentRepository
 {

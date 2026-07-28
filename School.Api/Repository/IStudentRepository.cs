@@ -1,6 +1,6 @@
 ﻿using System;
 using School.Api.Models;
-
+using School.Api.Services;
 
 namespace School.Api.Repository
 
@@ -11,6 +11,6 @@ namespace School.Api.Repository
         public Student CreateStudent(Student student);
         public Student UpdateStudent(int id, Student student);
         public void DeleteStudent(int id);
-}
+    }
 
 
