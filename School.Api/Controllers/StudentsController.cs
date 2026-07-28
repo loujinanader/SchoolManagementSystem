@@ -20,7 +20,7 @@ namespace School.Api.Controllers
         // GET: api/<StudentsController>
         //(Read)
         [HttpGet]
-        [Route("GetAllStudents")]
+        [Route("GetAllStudents")]  //_repository.GetById(id);
         public IActionResult Get()
         {
             var students = _db.Students
@@ -103,8 +103,8 @@ namespace School.Api.Controllers
             return Ok(studentData);
         }
 
-        // DELETE api/<StudentsController>/5
-        [HttpDelete("{id}")]
+        // DELETE api/<StudentsController>/5 
+        [HttpDelete("{id}")] //_repository.GetById(id);
         public IActionResult DeleteStudent(int id)
         {
             var student = _db.Students.FirstOrDefault(s => s.StudentID == id);
