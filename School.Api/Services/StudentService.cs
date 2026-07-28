@@ -9,5 +9,15 @@ public class StudentService : IstudentService
 {
     throw new Exception("Invalid student age");
 }
+if (string.IsNullOrEmpty(student.StudentName))
+{
+    throw new Exception("Student name cannot be empty");
+
+    if (student.CID <= 0)
+    {
+        throw new Exception("Invalid class ID");
+    }
+
+
 
 }
