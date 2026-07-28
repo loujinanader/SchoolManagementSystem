@@ -1,20 +1,22 @@
 ﻿using System;
 
-    public class StudentDto
-    {
-        public int StudentID { get; set; }
-
-        public string StudentName { get; set; }
-
-        public int Age { get; set; }
-
-        public string ClassName { get; set; }
-    new StudentDto
+public class StudentDto
 {
-        StudentID = student.StudentID,
-    StudentName = student.StudentName,
-    Age = student.Age,
-    ClassName = student.ClassRoom.ClassName
-    }
+    public int StudentID { get; set; }
+    public string StudentName { get; set; }
+    public int Age { get; set; }
+    public string ClassName { get; set; }
 }
 
+public StudentDto MapStudent(Student student)
+{
+    var dto = new StudentDto
+    {
+        StudentID = student.StudentID,
+        StudentName = student.StudentName,
+        Age = student.Age,
+        ClassName = student.ClassRoom?.ClassName
+    };
+
+    return dto;
+}

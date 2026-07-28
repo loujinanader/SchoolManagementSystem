@@ -10,7 +10,7 @@ namespace School.Api.Repository
         public Student? GetStudentById(int id);
         public Student CreateStudent(Student student);
         public Student UpdateStudent(int id, Student student);
-        public void DeleteStudent(int id);
+        public bool DeleteStudent(int id);
     }
 
 

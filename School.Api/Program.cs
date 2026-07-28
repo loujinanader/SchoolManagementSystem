@@ -4,6 +4,7 @@ using School.Api.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 // Add services to the container.
 
 builder.Services.AddControllers();

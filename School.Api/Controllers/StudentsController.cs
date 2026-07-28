@@ -13,11 +13,10 @@ namespace School.Api.Controllers
         private readonly IStudentRepository _repository;
 
 
-        public StudentsController(IStudentRepository repository)
+        public StudentsController(IStudentService service)
         {
-          _repository = repository;
+            _service = service;
         }
-
 
         // GET: api/<StudentsController>
         //(Read)
