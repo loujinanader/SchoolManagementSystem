@@ -11,49 +11,35 @@ namespace School.Api.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly SchoolContext _db;
+        private readonly IStudentRepository _repository;
 
-        public StudentsController(SchoolContext db)
+
+        public StudentsController(IStudentRepository repository)
         {
-            _db = db;
+          _repository = repository;
         }
+
+
         // GET: api/<StudentsController>
         //(Read)
         [HttpGet]
-        [Route("GetAllStudents")]  //_repository.GetById(id);
+        [Route("GetAllStudents")]
         public IActionResult Get()
         {
-            var students = _db.Students
-                .Include(s => s.ClassRoom)
-                .Select(s => new
-                {
-                    s.StudentID,
-                    s.StudentName,
-                    s.Age,
-                    s.CID,
-                    ClassName = s.ClassRoom.ClassName
-                })
-                .ToList();
+            var students = _repository.GetAllStudents();
 
             return Ok(students);
         }
+
+
+
         //(Read)
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
 
         public IActionResult GetStudentById(int id)
         {
-            var student = _db.Students
-                .Include(s => s.ClassRoom)
-                .Select(s => new
-                {
-                    StudentID = s.StudentID,
-                    StudentName = s.StudentName,
-                    Age = s.Age,
-                    ClassName = s.ClassRoom.ClassName
-
-                })
-                .FirstOrDefault(s => s.StudentID == id);
+            var student = _repository.GetStudentById(id);
 
             if (student == null)
             {
@@ -62,6 +48,7 @@ namespace School.Api.Controllers
 
             return Ok(student);
         }
+
 
 
 
@@ -71,9 +58,7 @@ namespace School.Api.Controllers
         [Route("Create")]
         public IActionResult CreateStudent(Student student)
         {
-            _db.Students.Add(student);
-            _db.SaveChanges();
-
+            _repository.CreateStudent(student);
             return Ok(student);
         }
 
@@ -83,38 +68,32 @@ namespace School.Api.Controllers
 
 
         // PUT api/<StudentsController>/5
-       
+
         [HttpPatch("{id}")]
         public IActionResult UpdateStudent(int id, Student obj)
         {
-            var studentData = _db.Students.FirstOrDefault(s => s.StudentID == id);
+            var updatedStudent = _repository.UpdateStudent(id, obj);
 
-            if (studentData == null)
+            if (updatedStudent == null)
             {
                 return NotFound();
             }
 
-            studentData.StudentName = obj.StudentName;
-            studentData.Age = obj.Age;
-            studentData.CID = obj.CID;
-
-            _db.SaveChanges();
-
-            return Ok(studentData);
+            return Ok(updatedStudent);
         }
 
         // DELETE api/<StudentsController>/5 
-        [HttpDelete("{id}")] //_repository.GetById(id);
+        [HttpDelete("{id}")]
         public IActionResult DeleteStudent(int id)
         {
-            var student = _db.Students.FirstOrDefault(s => s.StudentID == id);
+            var student = _repository.GetStudentById(id);
+
             if (student == null)
             {
                 return NotFound();
             }
 
-            _db.Students.Remove(student);
-            _db.SaveChanges();
+            _repository.DeleteStudent(id);
 
             return Ok(student);
         }
