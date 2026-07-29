@@ -30,22 +30,3 @@ namespace School.Api.Data
 
     }
 }
-//protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//{
-//    base.OnConfiguring(optionsBuilder);
-//}
-
-//protected override void OnModelCreating(ModelBuilder modelBuilder)
-//{   
-//    base.OnModelCreating(modelBuilder);
-//    modelBuilder.Entity<ClassRoom>()
-//        .HasMany<Student>(c => c.Students)
-//        .WithOne(s => s.ClassRoom)
-//        .HasForeignKey(s => s.CID);
-//    modelBuilder.Entity<Student>()
-//        .HasOne<ClassRoom>(s => s.ClassRoom)
-//        .WithMany(c => c.Students)
-//        .HasForeignKey(s => s.CID);
-//    modelBuilder.Entity<Student>().HasKey(s => s.StudentID);
-//    modelBuilder.Entity<ClassRoom>().HasKey(c => c.ClassId);
-//}
