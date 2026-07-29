@@ -55,9 +55,22 @@ namespace School.Api.Controllers
         [HttpPost]
         public IActionResult CreateStudent(Student student)
         {
-            var createdStudent = _service.CreateStudent(student);
-
-            return Ok(createdStudent);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var createStudent = _service.CreateStudent(student);
+                return Ok(createStudent);
+            }
+            catch (ArgumentException ex)
+            {
+                // Return a structured validation error
+                return BadRequest(new { Field = ex.ParamName, Error = ex.Message });
+            }
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
         }
 
 

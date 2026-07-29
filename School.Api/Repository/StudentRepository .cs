@@ -1,6 +1,6 @@
 ﻿using System;
 using School.Api.Models;
-using School.Api.Repository;
+using School.Api.Services;
 using School.Api.Models.Student;
 using School.Api.Data;
 
@@ -18,6 +18,7 @@ namespace School.Api.Repository
         {
             return _db.Students.ToList();
         }
+
         public Student? GetStudentById(int id)
         {
             return _db.Students.FirstOrDefault(s => s.StudentID == id);
