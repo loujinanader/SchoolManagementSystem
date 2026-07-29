@@ -55,7 +55,10 @@ namespace School.Api.Repository
 
             studentData.StudentName = obj.StudentName;
             studentData.Age = obj.Age;
-            studentData.CID = obj.CID;
+           if(obj.CID.HasValue)
+            {
+                studentData.CID = obj.CID.Value;
+            }
 
             _db.SaveChanges();
 

@@ -6,7 +6,7 @@ namespace School.Api.Models.Student
         public int Age { get; set; }
         public int StudentID { get; set; }
         public string StudentName { get; set; } = string.Empty;
-        public int CID { get; set; }
+        public int? CID { get; set; }
         [JsonIgnore]
         public School.Api.Models.ClassRoom.ClassRoom? ClassRoom { get; set; }
     }
