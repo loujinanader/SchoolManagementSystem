@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.Models.Student;
-using School.Api.Repository;
+using School.Api.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,12 +10,12 @@ namespace School.Api.Controllers
     [ApiController]
     public class StudentsController : ControllerBase
     {
-        private readonly IStudentRepository _repository;
+        private readonly IStudentService _service;
 
 
-        public StudentsController(IStudentRepository repository)
+        public StudentsController(IStudentService service)
         {
-            _repository = repository;
+            _service = service;
         }
 
         // GET: api/<StudentsController>
@@ -24,7 +24,7 @@ namespace School.Api.Controllers
         [Route("GetAllStudents")]
         public IActionResult Get()
         {
-            var students = _repository.GetAllStudents();
+            var students = _service.GetAllStudents();
 
             return Ok(students);
         }
@@ -37,7 +37,7 @@ namespace School.Api.Controllers
 
         public IActionResult GetStudentById(int id)
         {
-            var student = _repository.GetStudentById(id);
+            var student = _service.GetStudentById(id);
 
             if (student == null)
             {
@@ -55,7 +55,7 @@ namespace School.Api.Controllers
         [HttpPost]
         public IActionResult CreateStudent(Student student)
         {
-            var createdStudent = _repository.CreateStudent(student);
+            var createdStudent = _service.CreateStudent(student);
 
             return Ok(createdStudent);
         }
@@ -69,7 +69,7 @@ namespace School.Api.Controllers
         [HttpPatch("{id}")]
         public IActionResult UpdateStudent(int id, Student obj)
         {
-            var updatedStudent = _repository.UpdateStudent(id, obj);
+            var updatedStudent = _service.UpdateStudent(id, obj);
 
             if (updatedStudent == null)
             {
@@ -83,14 +83,14 @@ namespace School.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteStudent(int id)
         {
-            var student = _repository.GetStudentById(id);
+            var student = _service.GetStudentById(id);
 
             if (student == null)
             {
                 return NotFound();
             }
 
-            _repository.DeleteStudent(id);
+            _service.DeleteStudent(id);
 
             return Ok(student);
         }
