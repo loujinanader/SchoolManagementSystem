@@ -32,7 +32,14 @@ namespace School.Api.Services
 
         public Student UpdateStudent(int id, Student student) {
             if (student.Age < 5 || student.Age > 18)
-                throw new Exception("Invalid age"); 
+                throw new ArgumentException("Age must be between 5 and 18", nameof(student.Age));
+
+            if (string.IsNullOrWhiteSpace(student.StudentName))
+                throw new ArgumentException("Student name is required", nameof(student.StudentName));
+
+            if (student.CID <= 0)
+                throw new ArgumentException("Invalid class ID", nameof(student.CID));
+
             return _repository.UpdateStudent(id, student); }
 
         public Student? GetStudentById(int id) { return _repository.GetStudentById(id); }
