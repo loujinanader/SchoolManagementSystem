@@ -10,9 +10,9 @@ namespace School.Api.Repository
     public class StudentRepository : IStudentRepository
     {
         private readonly SchoolContext _db;
-        public StudentRepository(SchoolContext _db)
+        public StudentRepository(SchoolContext db)
         {
-            this._db = _db;
+            db = _db;
         }
         public IEnumerable<Student> GetAllStudents()
         {
