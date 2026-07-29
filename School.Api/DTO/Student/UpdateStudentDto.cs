@@ -1,8 +1,8 @@
 ﻿using System;
-
-public class UpdateStudentDto	
+namespace School.Api.DTO.Student
 {
-	public UpdateStudentDto()
-	{
-	}
+    public class UpdateStudentDto
+    {
+
+    }
 }

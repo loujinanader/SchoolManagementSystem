@@ -1,13 +1,15 @@
 ﻿using System;
-using School.Api.Models;
-using School.Api.Repository;
-using School.Api.Services;
+using School.Api.Models.Student;
 
-public interface IStudentService
+namespace School.Api.Services
 {
-    Task<IEnumerable<Student>> GetAllStudentsAsync(); //IEnumerable<Student> GetAllStudents();
-    public Student? GetStudentById(int id);
-    public Student CreateStudent(Student student);
-    public Student UpdateStudent(int id, Student student);
-    public bool DeleteStudent(int id);
+
+    public interface IStudentService
+    {
+        public IEnumerable<Student> GetAllStudents();
+        public Student? GetStudentById(int id);
+        public Student CreateStudent(Student student);
+        public Student UpdateStudent(int id, Student student);
+        public bool DeleteStudent(int id);
+    }
 }

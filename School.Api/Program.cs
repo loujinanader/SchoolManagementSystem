@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using School.Api.Data;
+using School.Api.Repository;
+using School.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,11 +23,13 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.MapControllers();
 app.UseHttpsRedirection();
 
