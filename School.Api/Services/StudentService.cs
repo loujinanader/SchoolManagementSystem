@@ -3,6 +3,7 @@ using School.Api.Models.Student;
 using School.Api.Repository;
 using School.Api.Data;
 using School.Api.DTO.Student;
+using School.Api.Models.ClassRoom;
 
 namespace School.Api.Services
 {
@@ -26,9 +27,9 @@ namespace School.Api.Services
 
             if (student.CID <= 0)
                 throw new ArgumentException("Invalid class ID", nameof(student.CID));
-           
 
 
+            
             return _repository.CreateStudent(student);
 
            

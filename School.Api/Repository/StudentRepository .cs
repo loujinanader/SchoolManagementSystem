@@ -38,6 +38,10 @@ namespace School.Api.Repository
         public Student CreateStudent(Student student)
         {
             _db.Students.Add(student);
+            if (!_db.ClassRooms.Any(c => c.ClassId == student.CID))
+            {
+                throw new ArgumentException("The specified class does not exist.");
+            }
             _db.SaveChanges();
             return student;
         }

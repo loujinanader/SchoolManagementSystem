@@ -13,5 +13,6 @@ namespace School.Api.DTO.Student
         [Required]
         public int CID { get; set; }
 
+        public int StudentID { get; set; }
     }
 }

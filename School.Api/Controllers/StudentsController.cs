@@ -67,9 +67,10 @@ namespace School.Api.Controllers
         [HttpPost]
         public IActionResult CreateStudent(CreateStudentDto dto)
         {
-           // if (!ModelState.IsValid) return BadRequest(ModelState);
+         //if (!ModelState.IsValid) return BadRequest(ModelState);
             var student = new Student
             {
+                StudentID = dto.StudentID,
                 StudentName = dto.StudentName,
                 Age = dto.Age,
                 CID = dto.CID
