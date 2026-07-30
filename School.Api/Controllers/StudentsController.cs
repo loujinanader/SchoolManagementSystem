@@ -89,14 +89,9 @@ namespace School.Api.Controllers
         [HttpPatch("{id}")]
         public IActionResult UpdateStudent(int id, UpdateStudentDto dto)
         {
-            var student = new Student
-            {
-                StudentName = dto.StudentName,
-                Age = dto.Age,
-                CID = dto.CID
-            };
+          
 
-            var updatedStudent = _service.UpdateStudent(id, student);
+            var updatedStudent = _service.UpdateStudent(id, dto);
 
             if (updatedStudent == null)
                 return NotFound();

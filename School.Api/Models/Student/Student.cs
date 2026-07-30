@@ -8,7 +8,7 @@ namespace School.Api.Models.Student
         public int Age { get; set; }
         public int StudentID { get; set; }
         //[Required]
-        public string StudentName { get; set; } = string.Empty;
+        public string? StudentName { get; set; }
 
         public int? CID { get; set; }
         [JsonIgnore]

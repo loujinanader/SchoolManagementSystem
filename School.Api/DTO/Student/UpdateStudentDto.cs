@@ -9,9 +9,9 @@ namespace School.Api.DTO.Student
         public string StudentName { get; set; } = string.Empty;
 
         [Range(5, 18)]
-        public int Age { get; set; }
+        public int? Age { get; set; }
 
        // [Required]
-        public int CID { get; set; }
+        public int? CID { get; set; }
     }
 }

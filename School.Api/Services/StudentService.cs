@@ -2,6 +2,7 @@
 using School.Api.Models.Student;
 using School.Api.Repository;
 using School.Api.Data;
+using School.Api.DTO.Student;
 
 namespace School.Api.Services
 {
@@ -34,17 +35,29 @@ namespace School.Api.Services
         }
         public bool DeleteStudent(int id) { return _repository.DeleteStudent(id); }
 
-        public Student UpdateStudent(int id, Student student) {
-            if (student.Age < 5 || student.Age > 18)
-                throw new ArgumentException("Age must be between 5 and 18", nameof(student.Age));
+        public Student UpdateStudent(int id, UpdateStudentDto dto) {
+            if (dto.Age < 5 || dto.Age > 18)
+                throw new ArgumentException("Age must be between 5 and 18", nameof(dto.Age));
 
-            if (string.IsNullOrWhiteSpace(student.StudentName))
-                throw new ArgumentException("Student name is required", nameof(student.StudentName));
+            if (dto.StudentName != null && string.IsNullOrWhiteSpace(dto.StudentName))
+            {
+                throw new ArgumentException("Student name cannot be empty.");
+            }
 
-           
+            if (dto.Age.HasValue && (dto.Age < 5 || dto.Age > 18))
+            {
+                throw new ArgumentException("Age must be between 5 and 18.");
+            }
+
+            if (dto.CID.HasValue && dto.CID <= 0)
+            {
+                throw new ArgumentException("Invalid class ID.");
+            }
 
 
-            return _repository.UpdateStudent(id, student); }
+
+
+            return _repository.UpdateStudent(id, dto); }
 
         public Student? GetStudentById(int id) {
             

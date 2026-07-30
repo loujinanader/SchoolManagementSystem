@@ -38,9 +38,6 @@ namespace School.Api.Repository
         public Student CreateStudent(Student student)
         {
             _db.Students.Add(student);
-          
-
-          
             _db.SaveChanges();
             return student;
         }
@@ -59,7 +56,7 @@ namespace School.Api.Repository
 
             return true;
         }
-        public Student UpdateStudent(int id, Student obj)
+        public Student? UpdateStudent(int id, UpdateStudentDto dto)
         {
             var studentData = _db.Students
                 .FirstOrDefault(s => s.StudentID == id);
@@ -69,11 +66,20 @@ namespace School.Api.Repository
                 return null;
             }
 
-            studentData.StudentName = obj.StudentName;
-            studentData.Age = obj.Age;
-           if(obj.CID.HasValue)
+          
+            if (!string.IsNullOrWhiteSpace(dto.StudentName))
             {
-                studentData.CID = obj.CID.Value;
+                studentData.StudentName = dto.StudentName;
+            }
+
+            if (dto.Age.HasValue)
+            {
+                studentData.Age = dto.Age.Value;
+            }
+
+            if (dto.CID.HasValue)
+            {
+                studentData.CID = dto.CID.Value;
             }
 
             _db.SaveChanges();
