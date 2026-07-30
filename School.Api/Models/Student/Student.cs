@@ -4,10 +4,10 @@ namespace School.Api.Models.Student
 {
     public class Student
     { //[Age],[StudentId],[StudentName],[CID]
-        [Range(5, 18, ErrorMessage = "Age must be between 5 and 18")]
+        //[Range(5, 18, ErrorMessage = "Age must be between 5 and 18")]
         public int Age { get; set; }
         public int StudentID { get; set; }
-        [Required]
+        //[Required]
         public string StudentName { get; set; } = string.Empty;
         public int? CID { get; set; }
         [JsonIgnore]

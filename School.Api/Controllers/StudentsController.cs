@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.Models.Student;
 using School.Api.Services;
+using School.Api.DTO.Student;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,14 +21,16 @@ namespace School.Api.Controllers
 
         // GET: api/<StudentsController>
         //(Read)
-        [HttpGet]
-        [Route("GetAllStudents")]
-        public IActionResult Get()
-        {
-            var students = _service.GetAllStudents();
-
-            return Ok(students);
-        }
+       
+       
+            [HttpGet]
+            [Route("GetAllStudents")]
+            public IActionResult Get()
+            {
+                var students = _service.GetAllStudents();
+                return Ok(students);
+            }
+        
 
 
 
@@ -53,24 +56,19 @@ namespace School.Api.Controllers
         //create
         // POST api/<StudentsController>
         [HttpPost]
-        public IActionResult CreateStudent(Student student)
+        public IActionResult CreateStudent(CreateStudentDto dto)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var student = new Student
             {
-                return BadRequest(ModelState);
-            }
-            try
-            {
-                var createStudent = _service.CreateStudent(student);
-                return Ok(createStudent);
-            }
-            catch (ArgumentException ex)
-            {
-                // Return a structured validation error
-                return BadRequest(new { Field = ex.ParamName, Error = ex.Message });
-            }
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                StudentName = dto.StudentName,
+                Age = dto.Age,
+                CID = dto.CID
+            };
+
+            var createdStudent = _service.CreateStudent(student);
+
+            return Ok(createdStudent);
         }
 
 
@@ -80,14 +78,19 @@ namespace School.Api.Controllers
         // PUT api/<StudentsController>/5
 
         [HttpPatch("{id}")]
-        public IActionResult UpdateStudent(int id, Student obj)
+        public IActionResult UpdateStudent(int id, UpdateStudentDto dto)
         {
-            var updatedStudent = _service.UpdateStudent(id, obj);
+            var student = new Student
+            {
+                StudentName = dto.StudentName,
+                Age = dto.Age,
+                CID = dto.CID
+            };
+
+            var updatedStudent = _service.UpdateStudent(id, student);
 
             if (updatedStudent == null)
-            {
                 return NotFound();
-            }
 
             return Ok(updatedStudent);
         }

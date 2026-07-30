@@ -1,5 +1,4 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace School.Api.DTO.Student
 {
     public class CreateStudentDto
@@ -13,7 +12,6 @@ namespace School.Api.DTO.Student
 
         [Required]
         public int CID { get; set; }
-
 
     }
 }

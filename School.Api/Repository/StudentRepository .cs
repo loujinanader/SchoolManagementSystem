@@ -9,16 +9,21 @@ namespace School.Api.Repository
 {
     public class StudentRepository : IStudentRepository
     {
+       
         private readonly SchoolContext _db;
+
         public StudentRepository(SchoolContext db)
         {
-            db = _db;
+            _db = db;    
         }
+
+        
         public IEnumerable<Student> GetAllStudents()
         {
             return _db.Students.ToList();
         }
 
+        
         public Student? GetStudentById(int id)
         {
             return _db.Students.FirstOrDefault(s => s.StudentID == id);

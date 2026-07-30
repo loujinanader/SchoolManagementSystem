@@ -25,8 +25,15 @@ namespace School.Api.Services
 
             if (student.CID <= 0)
                 throw new ArgumentException("Invalid class ID", nameof(student.CID));
+            if (!_classRoomRepository.Exists(student.CID))
+            {
+                throw new Exception("Classroom does not exist");
+            }
+
 
             return _repository.CreateStudent(student);
+
+           
         }
         public bool DeleteStudent(int id) { return _repository.DeleteStudent(id); }
 
@@ -39,6 +46,11 @@ namespace School.Api.Services
 
             if (student.CID <= 0)
                 throw new ArgumentException("Invalid class ID", nameof(student.CID));
+
+            if (!_classRoomRepository.Exists(student.CID))
+            {
+                throw new Exception("Classroom does not exist");
+            }
 
             return _repository.UpdateStudent(id, student); }
 

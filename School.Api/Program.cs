@@ -3,6 +3,7 @@ using School.Api.Data;
 using School.Api.Repository;
 using School.Api.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
