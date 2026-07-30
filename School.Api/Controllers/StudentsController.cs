@@ -21,24 +21,25 @@ namespace School.Api.Controllers
 
         // GET: api/<StudentsController>
         //(Read)
-       
-       
-            [HttpGet]
-            [Route("GetAllStudents")]
+          [HttpGet]
+          [Route("GetAllStudents")]
             public IActionResult Get()
             {
-                var students = _service.GetAllStudents();
-                return Ok(students);
-            }
-        
-
-
-
+            var result = _service.GetAllStudents().Select(s => new StudentDto
+            {
+                StudentID = s.StudentID,
+                StudentName = s.StudentName,
+                Age = s.Age,
+                ClassName = s.ClassRoom?.ClassName ?? ""
+            });
+            return Ok(result);
+        }
+     
         //(Read)
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
 
-        public IActionResult GetStudentById(int id)
+        public IActionResult GetStudentById(int id )
         {
             var student = _service.GetStudentById(id);
 
@@ -47,7 +48,15 @@ namespace School.Api.Controllers
                 return NotFound();
             }
 
-            return Ok(student);
+            var dto = new StudentDto
+            {
+                StudentID = student.StudentID,
+                StudentName = student.StudentName,
+                Age = student.Age,
+                ClassName = student.ClassRoom?.ClassName ?? ""
+            };
+
+            return Ok(dto);
         }
 
 
@@ -58,7 +67,7 @@ namespace School.Api.Controllers
         [HttpPost]
         public IActionResult CreateStudent(CreateStudentDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+           // if (!ModelState.IsValid) return BadRequest(ModelState);
             var student = new Student
             {
                 StudentName = dto.StudentName,

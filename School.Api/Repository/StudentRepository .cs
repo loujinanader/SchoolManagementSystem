@@ -1,8 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 using School.Api.Models;
 using School.Api.Services;
 using School.Api.Models.Student;
 using School.Api.Data;
+using School.Api.DTO.Student;
 
 
 namespace School.Api.Repository
@@ -20,17 +22,25 @@ namespace School.Api.Repository
         
         public IEnumerable<Student> GetAllStudents()
         {
-            return _db.Students.ToList();
+            return _db.Students
+            .Include(s => s.ClassRoom)
+            .ToList();
         }
 
         
         public Student? GetStudentById(int id)
         {
-            return _db.Students.FirstOrDefault(s => s.StudentID == id);
+
+            return _db.Students
+          .Include(s => s.ClassRoom)
+          .FirstOrDefault(s => s.StudentID == id);
         }
         public Student CreateStudent(Student student)
         {
             _db.Students.Add(student);
+          
+
+          
             _db.SaveChanges();
             return student;
         }

@@ -9,6 +9,7 @@ namespace School.Api.Models.Student
         public int StudentID { get; set; }
         //[Required]
         public string StudentName { get; set; } = string.Empty;
+
         public int? CID { get; set; }
         [JsonIgnore]
         public School.Api.Models.ClassRoom.ClassRoom? ClassRoom { get; set; }
