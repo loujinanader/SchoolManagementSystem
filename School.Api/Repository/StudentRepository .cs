@@ -1,4 +1,4 @@
-﻿using System;
+﻿xxxusing System;
 using Microsoft.EntityFrameworkCore;
 using School.Api.Models;
 using School.Api.Services;
@@ -47,7 +47,7 @@ namespace School.Api.Repository
         }
         public bool DeleteStudent(int id)
         {
-            var student = _db.Students
+            var student =  _db.Students
                 .FirstOrDefault(s => s.StudentID == id);
 
             if (student == null)
