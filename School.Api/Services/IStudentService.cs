@@ -2,7 +2,6 @@
 using School.Api.Models.Student;
 namespace School.Api.Services
 {
-
     public interface IStudentService
     {
         public IEnumerable<Student> GetAllStudents();

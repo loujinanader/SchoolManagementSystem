@@ -1,9 +1,7 @@
 ﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
-
 namespace School.Api.Repository
-{
-
+{ 
     public interface IStudentRepository
     {
         public IEnumerable<Student> GetAllStudents();
@@ -12,6 +10,4 @@ namespace School.Api.Repository
         public Student? UpdateStudent(int id, UpdateStudentDto dto);
         public bool DeleteStudent(int id);
     }
-
-
 }
