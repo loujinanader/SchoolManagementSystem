@@ -6,8 +6,8 @@ namespace School.Api.Repository
 {
     public class StudentRepository : IStudentRepository
     {
-        private readonly SchoolContext _db;
-        public StudentRepository(SchoolContext db)
+        private readonly SchoolDbContext _db;
+        public StudentRepository(SchoolDbContext db)
         {
             _db = db;
         }

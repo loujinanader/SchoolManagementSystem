@@ -3,9 +3,9 @@ using School.Api.Models.ClassRoom;
 using School.Api.Models.Student;
 namespace School.Api.Data
 {
-    public class SchoolContext : DbContext
+    public class SchoolDbContext : DbContext
     {
-       public SchoolContext(DbContextOptions<SchoolContext> options) : base(options) { }
+       public SchoolDbContext(DbContextOptions<SchoolDbContext> options) : base(options) { }
         public DbSet<Student> Students { get; set; }
         public DbSet<ClassRoom> ClassRooms { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
