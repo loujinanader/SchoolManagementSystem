@@ -1,7 +1,4 @@
-﻿xxxusing System;
-using Microsoft.EntityFrameworkCore;
-using School.Api.Models;
-using School.Api.Services;
+﻿using Microsoft.EntityFrameworkCore;
 using School.Api.Models.Student;
 using School.Api.Data;
 using School.Api.DTO.Student;
