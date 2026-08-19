@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-namespace School.Api.DTO.Student 
+﻿namespace School.Api.DTO.Student
 {
-    public class StudentDto {
+    public class StudentDto
+    {
 
         public int StudentID { get; set; }
 
@@ -10,6 +10,6 @@ namespace School.Api.DTO.Student
         public int Age { get; set; }
 
         public string ClassName { get; set; } = string.Empty;
-    } 
+    }
 }
 

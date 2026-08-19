@@ -1,9 +1,6 @@
-﻿using System;
+﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
 using School.Api.Repository;
-using School.Api.Data;
-using School.Api.DTO.Student;
-using School.Api.Models.ClassRoom;
 
 namespace School.Api.Services
 {
@@ -29,14 +26,15 @@ namespace School.Api.Services
                 throw new ArgumentException("Invalid class ID", nameof(student.CID));
 
 
-            
+
             return _repository.CreateStudent(student);
 
-           
+
         }
         public bool DeleteStudent(int id) { return _repository.DeleteStudent(id); }
 
-        public Student UpdateStudent(int id, UpdateStudentDto dto) {
+        public Student UpdateStudent(int id, UpdateStudentDto dto)
+        {
             if (dto.Age < 5 || dto.Age > 18)
                 throw new ArgumentException("Age must be between 5 and 18", nameof(dto.Age));
 
@@ -58,11 +56,14 @@ namespace School.Api.Services
 
 
 
-            return _repository.UpdateStudent(id, dto); }
+            return _repository.UpdateStudent(id, dto);
+        }
 
-        public Student? GetStudentById(int id) {
-            
-                return _repository.GetStudentById(id); }
+        public Student? GetStudentById(int id)
+        {
+
+            return _repository.GetStudentById(id);
+        }
 
         public IEnumerable<Student> GetAllStudents()
         {

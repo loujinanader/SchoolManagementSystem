@@ -1,6 +1,4 @@
-﻿using System;
-using Xunit;
-namespace SchoolUnitTest
+﻿namespace SchoolUnitTest
 {
     public class UnitTest1
     {

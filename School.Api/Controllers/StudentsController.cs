@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using School.Api.DTO.Student;
 using School.Api.Models.Student;
 using School.Api.Services;
-using School.Api.DTO.Student;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,10 +21,10 @@ namespace School.Api.Controllers
 
         // GET: api/<StudentsController>
         //(Read)
-          [HttpGet]
-          [Route("GetAllStudents")]
-            public IActionResult Get()
-            {
+        [HttpGet]
+        [Route("GetAllStudents")]
+        public IActionResult Get()
+        {
             var result = _service.GetAllStudents().Select(s => new StudentDto
             {
                 StudentID = s.StudentID,
@@ -34,12 +34,12 @@ namespace School.Api.Controllers
             });
             return Ok(result);
         }
-     
+
         //(Read)
         // GET api/<StudentsController>/5
         [HttpGet("{id}")]
 
-        public IActionResult GetStudentById(int id )
+        public IActionResult GetStudentById(int id)
         {
             var student = _service.GetStudentById(id);
 
@@ -67,7 +67,7 @@ namespace School.Api.Controllers
         [HttpPost]
         public IActionResult CreateStudent(CreateStudentDto dto)
         {
-         //if (!ModelState.IsValid) return BadRequest(ModelState);
+            //if (!ModelState.IsValid) return BadRequest(ModelState);
             var student = new Student
             {
                 StudentID = dto.StudentID,
@@ -90,7 +90,7 @@ namespace School.Api.Controllers
         [HttpPatch("{id}")]
         public IActionResult UpdateStudent(int id, UpdateStudentDto dto)
         {
-          
+
 
             var updatedStudent = _service.UpdateStudent(id, dto);
 

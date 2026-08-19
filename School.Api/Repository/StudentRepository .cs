@@ -11,15 +11,15 @@ namespace School.Api.Repository
 {
     public class StudentRepository : IStudentRepository
     {
-       
+
         private readonly SchoolContext _db;
 
         public StudentRepository(SchoolContext db)
         {
-            _db = db;    
+            _db = db;
         }
 
-        
+
         public IEnumerable<Student> GetAllStudents()
         {
             return _db.Students
@@ -27,7 +27,7 @@ namespace School.Api.Repository
             .ToList();
         }
 
-        
+
         public Student? GetStudentById(int id)
         {
 
@@ -47,7 +47,7 @@ namespace School.Api.Repository
         }
         public bool DeleteStudent(int id)
         {
-            var student =  _db.Students
+            var student = _db.Students
                 .FirstOrDefault(s => s.StudentID == id);
 
             if (student == null)
@@ -70,7 +70,7 @@ namespace School.Api.Repository
                 return null;
             }
 
-          
+
             if (!string.IsNullOrWhiteSpace(dto.StudentName))
             {
                 studentData.StudentName = dto.StudentName;

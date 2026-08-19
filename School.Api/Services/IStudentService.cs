@@ -1,6 +1,5 @@
-﻿using System;
+﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
-using School.Api.DTO.Student;
 namespace School.Api.Services
 {
 

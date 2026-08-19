@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations;
 namespace School.Api.Models.Student
 {
     public class Student
@@ -15,4 +14,4 @@ namespace School.Api.Models.Student
         public School.Api.Models.ClassRoom.ClassRoom? ClassRoom { get; set; }
     }
 }
- 
+

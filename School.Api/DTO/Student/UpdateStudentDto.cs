@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 namespace School.Api.DTO.Student
 {
     public class UpdateStudentDto
@@ -11,7 +10,7 @@ namespace School.Api.DTO.Student
         [Range(5, 18)]
         public int? Age { get; set; }
 
-       // [Required]
+        // [Required]
         public int? CID { get; set; }
     }
 }
