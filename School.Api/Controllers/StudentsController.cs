@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using School.Api.DTO.Request;
 using School.Api.DTO.Student;
 using School.Api.Models.Student;
 using School.Api.Services.StudentServices;
@@ -49,7 +50,7 @@ namespace School.Api.Controllers
         //create
         // POST api/<StudentsController>
         [HttpPost]
-        public IActionResult CreateStudent(CreateStudentDto dto)
+        public IActionResult CreateStudentRequest(CreateStudentRequest dto)
         {
             //if (!ModelState.IsValid) return BadRequest(ModelState);
             var student = new Student
@@ -59,8 +60,8 @@ namespace School.Api.Controllers
                 Age = dto.Age,
                 CID = dto.CID
             };
-            var createdStudent = _service.CreateStudent(student);
-            return Ok(createdStudent);
+            var StudentResponse = _service.CreateStudent(student);
+            return Ok(StudentResponse);
         }
         // PUT api/<StudentsController>/5
         [HttpPatch("{id}")]
