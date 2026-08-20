@@ -1,7 +1,6 @@
 ﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
-using School.Api.Repository;
-namespace School.Api.Services
+namespace School.Api.Services.StudentServices
 {
     public class StudentService : IStudentService
     {

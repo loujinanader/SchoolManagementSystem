@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using School.Api.Data;
-using School.Api.Repository;
-using School.Api.Services;
+using School.Api.Repository.StudentRepository;
+using School.Api.Services.StudentServices;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IStudentService, StudentService>();

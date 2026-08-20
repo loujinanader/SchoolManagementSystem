@@ -2,7 +2,7 @@
 using School.Api.Models.Student;
 using School.Api.Data;
 using School.Api.DTO.Student;
-namespace School.Api.Repository
+namespace School.Api.Repository.StudentRepository
 {
     public class StudentRepository : IStudentRepository
     {

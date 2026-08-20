@@ -1,6 +1,6 @@
 ﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
-namespace School.Api.Repository
+namespace School.Api.Repository.StudentRepository.StudentRepository
 { 
     public interface IStudentRepository
     {

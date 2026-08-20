@@ -26,12 +26,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middleware\" />
+    <Folder Include="DTO\Respond\" />
+    <Folder Include="DTO\Request\" />
     <Folder Include="Mapping\" />
     <Folder Include="Extensions\" />
     <Folder Include="Migrations\" />
     <Folder Include="Validators\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

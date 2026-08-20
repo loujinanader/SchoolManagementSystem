@@ -1,6 +1,6 @@
 ﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
-namespace School.Api.Services
+namespace School.Api.Services.StudentServices
 {
     public interface IStudentService
     {
