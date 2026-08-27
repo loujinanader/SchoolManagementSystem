@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using School.Api.Data;
-using School.Api.DTO.Student;
+using School.Api.DTO.Request;
 using School.Api.Models.Student;
 namespace School.Api.Repository.StudentRepository
 {
@@ -11,31 +11,17 @@ namespace School.Api.Repository.StudentRepository
         {
             _db = db;
         }
-        public IEnumerable<Student> GetAllStudents()
-        {
-            return _db.Students
-            .Include(s => s.ClassRoom)
-            .ToList();
-        }
-        public Student? GetStudentById(int id)
-        {
-
-            return _db.Students
-          .Include(s => s.ClassRoom)
-          .FirstOrDefault(s => s.StudentID == id);
-        }
+        public IEnumerable<Student> GetAllStudents() => _db.Students.Include(s => s.ClassRoom).ToList();
+        public Student? GetStudentById(int id) => _db.Students.Include(s => s.ClassRoom).FirstOrDefault(s => s.StudentID == id);
         public Student CreateStudent(Student student)
         {
             _db.Students.Add(student);
-            if (!_db.ClassRooms.Any(c => c.ClassId == student.CID))
-                throw new ArgumentException("The specified class does not exist.");
             _db.SaveChanges();
             return student;
         }
         public bool DeleteStudent(int id)
         {
-            var student = _db.Students
-                .FirstOrDefault(s => s.StudentID == id);
+            var student = _db.Students.FirstOrDefault(s => s.StudentID == id);
             if (student == null)
                 return false;
             _db.Students.Remove(student);
@@ -44,8 +30,7 @@ namespace School.Api.Repository.StudentRepository
         }
         public Student? UpdateStudent(int id, UpdateStudentDto dto)
         {
-            var studentData = _db.Students
-                .FirstOrDefault(s => s.StudentID == id);
+            var studentData = _db.Students.FirstOrDefault(s => s.StudentID == id);
             if (studentData == null)
                 return null;
             if (!string.IsNullOrWhiteSpace(dto.StudentName))

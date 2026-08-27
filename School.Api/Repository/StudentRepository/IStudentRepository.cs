@@ -1,4 +1,4 @@
-﻿using School.Api.DTO.Student;
+﻿using School.Api.DTO.Request;
 using School.Api.Models.Student;
 namespace School.Api.Repository.StudentRepository
 {

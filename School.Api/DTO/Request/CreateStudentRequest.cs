@@ -10,6 +10,5 @@ namespace School.Api.DTO.Request
         public int Age { get; set; }
         [Required]
         public int CID { get; set; }
-        public int StudentID { get; set; }
     }
 }

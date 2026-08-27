@@ -27,7 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\Respond\" />
     <Folder Include="Mapping\" />
     <Folder Include="Extensions\" />
     <Folder Include="Migrations\" />

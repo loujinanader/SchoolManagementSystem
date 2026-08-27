@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.DTO.Request;
-using School.Api.DTO.Student;
+using School.Api.DTO.Respond;
 using School.Api.Models.Student;
 using School.Api.Services.StudentServices;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -50,18 +50,16 @@ namespace School.Api.Controllers
         //create
         // POST api/<StudentsController>
         [HttpPost]
-        public IActionResult CreateStudentRequest(CreateStudentRequest dto)
+        public IActionResult CreateStudent(CreateStudentRequest dto)
         {
-            //if (!ModelState.IsValid) return BadRequest(ModelState);
             var student = new Student
             {
-                StudentID = dto.StudentID,
                 StudentName = dto.StudentName,
                 Age = dto.Age,
                 CID = dto.CID
             };
             var StudentResponse = _service.CreateStudent(student);
-            return Ok(StudentResponse);
+            return CreatedAtAction(nameof(GetStudentById),new { id = StudentResponse.StudentID },StudentResponse);
         }
         // PUT api/<StudentsController>/5
         [HttpPatch("{id}")]
@@ -80,7 +78,7 @@ namespace School.Api.Controllers
             if (student == null)
                 return NotFound();
             _service.DeleteStudent(id);
-            return Ok(student);
+            return NoContent();
         }
     }
 }

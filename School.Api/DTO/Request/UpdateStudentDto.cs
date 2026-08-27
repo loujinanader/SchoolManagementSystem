@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace School.Api.DTO.Student
+namespace School.Api.DTO.Request
 {
     public class UpdateStudentDto
     {
