@@ -10,9 +10,6 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-Console.WriteLine($"CONNECTION STRING = '{connectionString}'");
-
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlite(connectionString));
 builder.Services.AddSwaggerGen();
