@@ -11,11 +11,9 @@ namespace School.Api.Repository.StudentRepository
 
         public StudentRepository(SchoolDbContext db) => _db = db;
 
-        public async Task<IEnumerable<Student>> GetAllStudentsAsync() =>
-            await _db.Students.Include(s => s.ClassRoom).ToListAsync();
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync() => await _db.Students.Include(s => s.ClassRoom).ToListAsync();
 
-        public async Task<Student?> GetStudentByIdAsync(int id) =>
-            await _db.Students.Include(s => s.ClassRoom).FirstOrDefaultAsync(s => s.StudentID == id);
+        public async Task<Student?> GetStudentByIdAsync(int id) => await _db.Students.Include(s => s.ClassRoom).FirstOrDefaultAsync(s => s.StudentID == id);
 
         public async Task<Student> CreateStudentAsync(Student student)
         {

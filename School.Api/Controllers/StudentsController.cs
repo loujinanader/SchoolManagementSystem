@@ -11,10 +11,7 @@ namespace School.Api.Controllers
     {
         private readonly IStudentService _service;
 
-        public StudentsController(IStudentService service)
-        {
-            _service = service;
-        }
+        public StudentsController(IStudentService service) =>  _service = service;
 
         // GET api/Students
         [HttpGet]
@@ -31,8 +28,7 @@ namespace School.Api.Controllers
             var student = await _service.GetStudentByIdAsync(id);
             if (student == null)
                 return NotFound();
-
-            return Ok(student);
+                return Ok(student);
         }
 
         // POST api/Students
@@ -50,8 +46,7 @@ namespace School.Api.Controllers
             var updated = await _service.UpdateStudentAsync(id, dto);
             if (updated == null)
                 return NotFound();
-
-            return Ok(updated);
+                return Ok(updated);
         }
 
         // DELETE api/Students/5
@@ -61,8 +56,7 @@ namespace School.Api.Controllers
             var deleted = await _service.DeleteStudentAsync(id);
             if (!deleted)
                 return NotFound();
-
-            return NoContent();
+                return NoContent();
         }
     }
 }
