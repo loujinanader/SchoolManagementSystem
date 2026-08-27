@@ -15,6 +15,8 @@ namespace School.Api.Repository.StudentRepository
         public Student? GetStudentById(int id) => _db.Students.Include(s => s.ClassRoom).FirstOrDefault(s => s.StudentID == id);
         public Student CreateStudent(Student student)
         {
+            if (!_db.ClassRooms.Any(c => c.ClassId == student.CID))
+                throw new ArgumentException("The specified class does not exist.");
             _db.Students.Add(student);
             _db.SaveChanges();
             return student;
