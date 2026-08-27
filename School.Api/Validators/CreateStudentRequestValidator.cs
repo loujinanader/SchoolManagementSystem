@@ -1,8 +1,6 @@
 ﻿using FluentValidation;
 using School.Api.DTO.Request;
-
-public class CreateStudentRequestValidator
-    : AbstractValidator<CreateStudentRequest>
+public class CreateStudentRequestValidator : AbstractValidator<CreateStudentRequest>
 {
     public CreateStudentRequestValidator()
     {
