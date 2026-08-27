@@ -1,4 +1,5 @@
-﻿using School.Api.DTO.Request;
+﻿using AutoMapper;
+using School.Api.DTO.Request;
 using School.Api.Models.Student;
 using School.Api.Repository.StudentRepository;
 namespace School.Api.Services.StudentServices
@@ -6,9 +7,11 @@ namespace School.Api.Services.StudentServices
     public class StudentService : IStudentService
     {
         private readonly IStudentRepository _repository;
-        public StudentService(IStudentRepository repository)
-        {
-            _repository = repository;
+        private readonly IMapper _mapper;
+        public StudentService(IStudentRepository repository, IMapper mapper) 
+        { 
+            _repository = repository; 
+            _mapper = mapper; 
         }
         public Student CreateStudent(Student student) => _repository.CreateStudent(student);
         public bool DeleteStudent(int id) => _repository.DeleteStudent(id);

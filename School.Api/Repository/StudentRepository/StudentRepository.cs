@@ -7,10 +7,7 @@ namespace School.Api.Repository.StudentRepository
     public class StudentRepository : IStudentRepository
     {
         private readonly SchoolDbContext _db;
-        public StudentRepository(SchoolDbContext db)
-        {
-            _db = db;
-        }
+        public StudentRepository(SchoolDbContext db) =>_db = db;
         public IEnumerable<Student> GetAllStudents() => _db.Students.Include(s => s.ClassRoom).ToList();
         public Student? GetStudentById(int id) => _db.Students.Include(s => s.ClassRoom).FirstOrDefault(s => s.StudentID == id);
         public Student CreateStudent(Student student)

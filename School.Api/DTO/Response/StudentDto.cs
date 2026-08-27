@@ -1,4 +1,4 @@
-﻿namespace School.Api.DTO.Respond
+﻿namespace School.Api.DTO.Response
 {
     public class StudentDto
     {

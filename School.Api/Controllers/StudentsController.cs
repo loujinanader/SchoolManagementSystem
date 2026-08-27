@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.DTO.Request;
-using School.Api.DTO.Respond;
+using School.Api.DTO.Response;
 using School.Api.Models.Student;
 using School.Api.Services.StudentServices;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860

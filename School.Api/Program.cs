@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using School.Api.Data;
+using School.Api.Mapping;
 using School.Api.Repository.StudentRepository;
 using School.Api.Services.StudentServices;
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<SchoolDbContext>(options =>options.UseSqlite( builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 // Configure the HTTP request pipeline.
