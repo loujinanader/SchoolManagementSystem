@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using School.Api.Models.Student;
 using School.Api.Data;
 using School.Api.DTO.Student;
+using School.Api.Models.Student;
 namespace School.Api.Repository.StudentRepository
 {
     public class StudentRepository : IStudentRepository
@@ -28,7 +28,7 @@ namespace School.Api.Repository.StudentRepository
         {
             _db.Students.Add(student);
             if (!_db.ClassRooms.Any(c => c.ClassId == student.CID))
-              throw new ArgumentException("The specified class does not exist.");
+                throw new ArgumentException("The specified class does not exist.");
             _db.SaveChanges();
             return student;
         }

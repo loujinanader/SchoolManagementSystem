@@ -23,7 +23,7 @@ namespace School.Api.Services.StudentServices
                 throw new ArgumentException("Invalid class ID", nameof(student.CID));
             return _repository.CreateStudent(student);
         }
-        public bool DeleteStudent(int id) =>  _repository.DeleteStudent(id); 
+        public bool DeleteStudent(int id) => _repository.DeleteStudent(id);
         public Student UpdateStudent(int id, UpdateStudentDto dto)
         {
             if (dto.Age < 5 || dto.Age > 18)
@@ -31,16 +31,16 @@ namespace School.Api.Services.StudentServices
 
             if (dto.StudentName != null && string.IsNullOrWhiteSpace(dto.StudentName))
                 throw new ArgumentException("Student name cannot be empty.");
-            
-            if (dto.Age.HasValue && (dto.Age < 5 || dto.Age > 18)) 
+
+            if (dto.Age.HasValue && (dto.Age < 5 || dto.Age > 18))
                 throw new ArgumentException("Age must be between 5 and 18.");
             if (dto.CID.HasValue && dto.CID <= 0)
                 throw new ArgumentException("Invalid class ID.");
-                return _repository.UpdateStudent(id, dto);
+            return _repository.UpdateStudent(id, dto);
         }
 
         public Student? GetStudentById(int id) => _repository.GetStudentById(id);
-        
+
         public IEnumerable<Student> GetAllStudents() => _repository.GetAllStudents();
     }
 }

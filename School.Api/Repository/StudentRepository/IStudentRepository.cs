@@ -1,7 +1,7 @@
 ﻿using School.Api.DTO.Student;
 using School.Api.Models.Student;
 namespace School.Api.Repository.StudentRepository
-{ 
+{
     public interface IStudentRepository
     {
         public IEnumerable<Student> GetAllStudents();

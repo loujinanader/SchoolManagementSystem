@@ -4,6 +4,6 @@ namespace School.Api.Controllers
 {
     public class ClassRoomsController : ControllerBase
     {
-        
+
     }
 }
