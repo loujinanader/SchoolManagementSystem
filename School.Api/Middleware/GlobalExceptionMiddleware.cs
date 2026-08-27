@@ -1,9 +1,4 @@
-﻿using System.Text.Json;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
-using School.Api
-namespace School.Api.Middleware
+﻿namespace School.Api.Middleware
 {
     public class GlobalExceptionMiddleware
     {
@@ -28,12 +23,13 @@ namespace School.Api.Middleware
         }
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-        var status = ex switch
-        {
-            KeyNotFoundException => StatusCodes.Status404NotFound,
-            ArgumentException => StatusCodes.Status400BadRequest,
-            _ => StatusCodes.Status500InternalServerError       
+            var status = exception switch
+            {
+                KeyNotFoundException => StatusCodes.Status404NotFound,
+                ArgumentException => StatusCodes.Status400BadRequest,
+                _ => StatusCodes.Status500InternalServerError
+            };
         }
-        }
+    
     }
 }
