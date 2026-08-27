@@ -1,17 +1,21 @@
 ﻿using FluentValidation;
 using School.Api.DTO.Request;
-public class CreateStudentRequestValidator : AbstractValidator<CreateStudentRequest>
+
+namespace School.Api.Validators
 {
-    public CreateStudentRequestValidator()
+    public class CreateStudentRequestValidator : AbstractValidator<CreateStudentRequest>
     {
-        RuleFor(x => x.StudentName)
-            .NotEmpty()
-            .MaximumLength(100);
+        public CreateStudentRequestValidator()
+        {
+            RuleFor(x => x.StudentName)
+                .NotEmpty()
+                .MaximumLength(50);
 
-        RuleFor(x => x.Age)
-            .InclusiveBetween(5, 100);
+            RuleFor(x => x.Age)
+                .InclusiveBetween(5, 18);
 
-        RuleFor(x => x.CID)
-            .GreaterThan(0);
+            RuleFor(x => x.CID)
+                .GreaterThan(0);
+        }
     }
 }

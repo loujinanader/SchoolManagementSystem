@@ -1,6 +1,6 @@
 ﻿namespace School.Api.Services.ClassRoomServices
 {
-    public class IClassRoomService
+    public interface IClassRoomService
     {
     }
 }

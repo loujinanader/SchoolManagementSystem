@@ -1,13 +1,14 @@
 ﻿using School.Api.DTO.Request;
 using School.Api.Models.Student;
+
 namespace School.Api.Repository.StudentRepository
 {
     public interface IStudentRepository
     {
-        public IEnumerable<Student> GetAllStudents();
-        public Student? GetStudentById(int id);
-        public Student CreateStudent(Student student);
-        public Student? UpdateStudent(int id, UpdateStudentDto dto);
-        public bool DeleteStudent(int id);
+        Task<IEnumerable<Student>> GetAllStudentsAsync();
+        Task<Student?> GetStudentByIdAsync(int id);
+        Task<Student> CreateStudentAsync(Student student);
+        Task<Student?> UpdateStudentAsync(int id, UpdateStudentDto dto);
+        Task<bool> DeleteStudentAsync(int id);
     }
 }

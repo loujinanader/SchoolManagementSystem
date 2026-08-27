@@ -4,11 +4,13 @@
     {
         private readonly RequestDelegate _next;
         private readonly ILogger<GlobalExceptionMiddleware> _logger;
+
         public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
+
         public async Task InvokeAsync(HttpContext context)
         {
             try
@@ -21,7 +23,8 @@
                 await HandleExceptionAsync(context, ex);
             }
         }
-        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+
+        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             var status = exception switch
             {
@@ -29,7 +32,15 @@
                 ArgumentException => StatusCodes.Status400BadRequest,
                 _ => StatusCodes.Status500InternalServerError
             };
+
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = status;
+
+            var message = status == StatusCodes.Status500InternalServerError
+                ? "An unexpected error occurred."
+                : exception.Message;
+
+            await context.Response.WriteAsJsonAsync(new { status, message });
         }
-    
     }
 }

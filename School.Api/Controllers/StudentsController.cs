@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using School.Api.DTO.Request;
 using School.Api.DTO.Response;
-using School.Api.Models.Student;
 using School.Api.Services.StudentServices;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace School.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -11,73 +10,58 @@ namespace School.Api.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _service;
+
         public StudentsController(IStudentService service)
         {
             _service = service;
         }
-        // GET: api/<StudentsController>
-        //(Read)
+
+        // GET api/Students
         [HttpGet]
-        [Route("GetAllStudents")]
-        public IActionResult Get()
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAll()
         {
-            var result = _service.GetAllStudents().Select(s => new StudentDto
-            {
-                StudentID = s.StudentID,
-                StudentName = s.StudentName,
-                Age = s.Age,
-                ClassName = s.ClassRoom?.ClassName ?? ""
-            });
-            return Ok(result);
+            var students = await _service.GetAllStudentsAsync();
+            return Ok(students);
         }
-        //(Read)
-        // GET api/<StudentsController>/5
+
+        // GET api/Students/5
         [HttpGet("{id}")]
-        public IActionResult GetStudentById(int id)
+        public async Task<ActionResult<StudentDto>> GetStudentById(int id)
         {
-            var student = _service.GetStudentById(id);
+            var student = await _service.GetStudentByIdAsync(id);
             if (student == null)
                 return NotFound();
-            var dto = new StudentDto
-            {
-                StudentID = student.StudentID,
-                StudentName = student.StudentName,
-                Age = student.Age,
-                ClassName = student.ClassRoom?.ClassName ?? ""
-            };
-            return Ok(dto);
+
+            return Ok(student);
         }
-        //create
-        // POST api/<StudentsController>
+
+        // POST api/Students
         [HttpPost]
-        public IActionResult CreateStudent(CreateStudentRequest dto)
+        public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentRequest dto)
         {
-            var student = new Student
-            {
-                StudentName = dto.StudentName,
-                Age = dto.Age,
-                CID = dto.CID
-            };
-            var StudentResponse = _service.CreateStudent(student);
-            return CreatedAtAction(nameof(GetStudentById),new { id = StudentResponse.StudentID },StudentResponse);
+            var created = await _service.CreateStudentAsync(dto);
+            return CreatedAtAction(nameof(GetStudentById), new { id = created.StudentID }, created);
         }
-        // PUT api/<StudentsController>/5
+
+        // PATCH api/Students/5
         [HttpPatch("{id}")]
-        public IActionResult UpdateStudent(int id, UpdateStudentDto dto)
+        public async Task<ActionResult<StudentDto>> UpdateStudent(int id, UpdateStudentDto dto)
         {
-            var updatedStudent = _service.UpdateStudent(id, dto);
-            if (updatedStudent == null)
+            var updated = await _service.UpdateStudentAsync(id, dto);
+            if (updated == null)
                 return NotFound();
-            return Ok(updatedStudent);
+
+            return Ok(updated);
         }
-        // DELETE api/<StudentsController>/5 
+
+        // DELETE api/Students/5
         [HttpDelete("{id}")]
-        public IActionResult DeleteStudent(int id)
+        public async Task<IActionResult> DeleteStudent(int id)
         {
-            var student = _service.GetStudentById(id);
-            if (student == null)
+            var deleted = await _service.DeleteStudentAsync(id);
+            if (!deleted)
                 return NotFound();
-            _service.DeleteStudent(id);
+
             return NoContent();
         }
     }
