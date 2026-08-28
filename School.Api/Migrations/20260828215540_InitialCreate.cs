@@ -14,9 +14,9 @@ namespace School.Api.Migrations
                 name: "ClassRooms",
                 columns: table => new
                 {
-                    ClassId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ClassName = table.Column<string>(type: "TEXT", nullable: false)
+                    ClassId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ClassName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,11 +27,11 @@ namespace School.Api.Migrations
                 name: "Students",
                 columns: table => new
                 {
-                    StudentID = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false),
-                    StudentName = table.Column<string>(type: "TEXT", nullable: true),
-                    CID = table.Column<int>(type: "INTEGER", nullable: true)
+                    StudentID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    StudentName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
