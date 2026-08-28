@@ -367,3 +367,4 @@ FodyWeavers.xsd
 *.db-shm
 *.db-wal
 /School.Api/appsettings.json
+/School.Api/appsettings.json
