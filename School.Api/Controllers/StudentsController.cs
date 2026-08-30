@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using School.Api.DTO.Request;
 using School.Api.DTO.Response;
 using School.Api.Services.StudentServices;
@@ -14,9 +15,9 @@ namespace School.Api.Controllers
         public StudentsController(IStudentService service) =>  _service = service;
         // GET api/Students
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAll(string? name, int? age, string? sortBy, int page, int pageSize)
         {
-            var students = await _service.GetAllStudentsAsync();
+            var students = await _service.GetAllStudentsAsync(name,age,sortBy,page,pageSize);
             return Ok(students);
         }
         // GET api/Students/5
@@ -59,19 +60,17 @@ namespace School.Api.Controllers
                 return NotFound();
                 return NoContent();
         }
-[HttpGet]
-public async Task<IActionResult> GetAllStudents(string? name, int? age,string? sortBy,int page ,int pageSize = 10)
+        [HttpGet]
+        public async Task<IActionResult> GetAllStudents(string? name, int? age, string? sortBy, int page, int pageSize = 10)
         {
-            var students = await _service.GetAllStudentsAsync(name,age,sortBy,page,pageSize);
-
+            var students = await _service.GetAllStudentsAsync(name, age, sortBy, page, pageSize);
             var result = students.Select(s => new StudentDto
             {
                 StudentID = s.StudentID,
                 StudentName = s.StudentName,
                 Age = s.Age,
-                ClassName = s.ClassRoom?.ClassName ?? ""
+                ClassName = s.ClassName ?? ""
             });
-
             return Ok(result);
         }
 
