@@ -52,9 +52,13 @@ if (string.IsNullOrEmpty(jwtKey))
 
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 
-builder.Services.AddAuthentication(
-    JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
+builder.Services.AddAuthentication(config =>
+   {
+       config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+       config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+       config.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
+   }).AddJwtBearer(options =>
     {
         options.TokenValidationParameters =
             new TokenValidationParameters
@@ -62,14 +66,15 @@ builder.Services.AddAuthentication(
                 ValidateIssuer = false,
                 ValidateAudience = false,
                 ValidateLifetime = false,
-                ValidateIssuerSigningKey = false,
+                ValidateIssuerSigningKey = true,
 
                 ValidIssuer =
                     builder.Configuration["Jwt:Issuer"],
 
                 IssuerSigningKey =
                     new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtKey))
+                        Encoding.UTF8.GetBytes(jwtKey)),
+                SaveSigninToken = true
             };
     });
 
