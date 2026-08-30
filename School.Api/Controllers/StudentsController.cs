@@ -2,9 +2,10 @@
 using School.Api.DTO.Request;
 using School.Api.DTO.Response;
 using School.Api.Services.StudentServices;
-
+using Microsoft.AspNetCore.Authorization;
 namespace School.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
