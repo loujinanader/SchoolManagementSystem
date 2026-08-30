@@ -13,13 +13,8 @@ namespace School.Api.Controllers
     {
         private readonly IStudentService _service;
         public StudentsController(IStudentService service) =>  _service = service;
-        // GET api/Students
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<StudentDto>>> GetAll(string? name, int? age, string? sortBy, int page, int pageSize)
-        {
-            var students = await _service.GetAllStudentsAsync(name,age,sortBy,page,pageSize);
-            return Ok(students);
-        }
+
+        
         // GET api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int id)
@@ -73,6 +68,9 @@ namespace School.Api.Controllers
             });
             return Ok(result);
         }
+      
+        
+
 
     }
 }
