@@ -19,7 +19,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options => 
+{ options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+{ Name = "Authorization", Type = SecuritySchemeType.Http, Scheme = "Bearer", BearerFormat = "JWT", In = ParameterLocation.Header, Description = "Enter your JWT token." }); 
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement { [new OpenApiSecuritySchemeReference("Bearer", document)] = [] });
+});
 
 var connectionString =
     builder.Configuration.GetConnectionString("DefaultConnection");
@@ -38,10 +42,6 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateStudentRequestValidat
 builder.Services.AddFluentValidationAutoValidation();
 
 
-// =========================
-// JWT Authentication
-// =========================
-
 var jwtKey = builder.Configuration["Jwt:Key"];
 
 if (string.IsNullOrEmpty(jwtKey))
@@ -59,10 +59,10 @@ builder.Services.AddAuthentication(
         options.TokenValidationParameters =
             new TokenValidationParameters
             {
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 ValidateAudience = false,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = false,
 
                 ValidIssuer =
                     builder.Configuration["Jwt:Issuer"],
