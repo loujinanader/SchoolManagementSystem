@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using School.Api.DTO.Request;
 using School.Api.DTO.Response;
+using School.Api.Models.Pagination;
 using School.Api.Services.StudentServices;
-using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 namespace School.Api.Controllers
 {
     [Authorize]
@@ -66,7 +67,10 @@ namespace School.Api.Controllers
                 Age = s.Age,
                 ClassName = s.ClassName ?? ""
             });
-            return Ok(result);
+
+            PagedResult<StudentDto> resultDTO = new PagedResult<StudentDto> { Data = result, Page = page, PageSize = pageSize, TotalCount = result.Count() };
+                 
+            return Ok(resultDTO);
         }
       
         
