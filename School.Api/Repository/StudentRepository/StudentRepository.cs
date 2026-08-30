@@ -10,8 +10,31 @@ namespace School.Api.Repository.StudentRepository
     {
         private readonly SchoolDbContext _db;
         public StudentRepository(SchoolDbContext db) => _db = db;
-        public async Task<IEnumerable<Student>> GetAllStudentsAsync() => await _db.Students.Include(s => s.ClassRoom).ToListAsync();
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync(string? name,int? age,string? sortBy, int page, int pageSize)
+        {
+            var query = _db.Students
+                .Include(s => s.ClassRoom)
+                .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(name))
+                query = query.Where(s => s.StudentName.Contains(name));
+
+            if (age.HasValue)
+                query = query.Where(s => s.Age == age.Value);
+
+            query = sortBy?.ToLower() switch
+            {
+                "name" => query.OrderBy(s => s.StudentName),
+                "age" => query.OrderBy(s => s.Age),
+                _ => query.OrderBy(s => s.StudentID)
+            };
+
+            query = query
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+
+            return await query.ToListAsync();
+        }
         public async Task<Student?> GetStudentByIdAsync(int id) => await _db.Students.Include(s => s.ClassRoom).FirstOrDefaultAsync(s => s.StudentID == id);
 
         public async Task<Student> CreateStudentAsync(Student student)
@@ -54,18 +77,5 @@ namespace School.Api.Repository.StudentRepository
 
         public Task<bool> ClassRoomExistAsync(int classId) =>
              _db.ClassRooms.AnyAsync(c => c.ClassId == classId);
-        public async Task<IEnumerable<Student>> GetAllStudentsAsync(string? name, int? age, string? sortBy, int page, int pageSize)
-        {
-            { var query = _db.Students.Include(s => s.ClassRoom).AsQueryable(); 
-                if (!string.IsNullOrWhiteSpace(name)) query = query.Where(s => s.StudentName.Contains(name)); 
-                if (age.HasValue) query = query.Where(s => s.Age == age.Value); query = sortBy?.ToLower() switch { "name" => query.OrderBy(s => s.StudentName), "age" => query.OrderBy(s => s.Age), _ => query.OrderBy(s => s.StudentID) }; 
-                
-                query = query.Skip((page - 1) * pageSize).Take(pageSize);
-                return await query.ToListAsync(); 
-            }
-        }
-
-
-
     }
 }

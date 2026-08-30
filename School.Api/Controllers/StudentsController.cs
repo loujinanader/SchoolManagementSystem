@@ -59,6 +59,21 @@ namespace School.Api.Controllers
                 return NotFound();
                 return NoContent();
         }
+[HttpGet]
+public async Task<IActionResult> GetAllStudents(string? name, int? age,string? sortBy,int page ,int pageSize = 10)
+        {
+            var students = await _service.GetAllStudentsAsync(name,age,sortBy,page,pageSize);
+
+            var result = students.Select(s => new StudentDto
+            {
+                StudentID = s.StudentID,
+                StudentName = s.StudentName,
+                Age = s.Age,
+                ClassName = s.ClassRoom?.ClassName ?? ""
+            });
+
+            return Ok(result);
+        }
 
     }
 }

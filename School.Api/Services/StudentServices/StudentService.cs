@@ -17,12 +17,11 @@ namespace School.Api.Services.StudentServices
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync()
+        public async Task<IEnumerable<StudentDto>> GetAllStudentsAsync(string? name, int? age, string? sortBy, int page, int pageSize)
         {
-            var students = await _repository.GetAllStudentsAsync();
+            var students = await _repository.GetAllStudentsAsync(name, age, sortBy, page, pageSize);
             return _mapper.Map<IEnumerable<StudentDto>>(students);
         }
-
         public async Task<StudentDto?> GetStudentByIdAsync(int id)
         {
             var student = await _repository.GetStudentByIdAsync(id);
@@ -73,7 +72,6 @@ namespace School.Api.Services.StudentServices
             await _repository.RemoveStudentAsync(student);
             return true;
         }
-        public async Task<IEnumerable<Student>> GetAllStudentsAsync(string? name, int? age, string? sortBy, int page, int pageSize) =>
-          await _repository.GetAllStudentsAsync(name, age, sortBy, page, pageSize);
+
     }
 }
