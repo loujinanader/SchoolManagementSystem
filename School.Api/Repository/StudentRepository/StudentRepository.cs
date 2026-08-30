@@ -49,7 +49,10 @@ namespace School.Api.Repository.StudentRepository
             await _db.SaveChangesAsync();
             return student;
         }
-        public Task<bool> ClassRoomExistsAsync(int classId) => _db.ClassRooms.AnyAsync(c => c.ClassId == classId);
         public Task SaveChangesAsync() => _db.SaveChangesAsync();
+
+        public Task<bool> ClassRoomExistAsync(int classId) =>
+             _db.ClassRooms.AnyAsync(c => c.ClassId == classId);
+        
     }
 }

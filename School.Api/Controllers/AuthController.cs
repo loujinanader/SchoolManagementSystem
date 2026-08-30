@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace School.Api.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -26,29 +27,39 @@ namespace School.Api.Controllers
             _configuration = configuration;
             _passwordHasher = passwordHasher;
         }
-        [AllowAnonymous]
+        
+        
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
-            var userName = dto.UserName.Trim();
-            if (_db.Users.Any(u => u.UserName == dto.UserName))
+            if (dto == null) return BadRequest();
+            var userName = dto.UserName?.Trim();
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(dto.Password))
+                return BadRequest("Username and password are required.");
+
+            if (await _db.Users.AnyAsync(u => u.UserName == userName))
                 return Conflict("Username already exists.");
+
+            var isFirstUser = !await _db.Users.AnyAsync();
             var user = new User
             {
-                UserName = dto.UserName,
+                UserName = userName,
                 Role = isFirstUser ? "Admin" : "User"
             };
+
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
-            return CreatedAtAction(nameof(Register), new{user.Id,user.UserName,user.Role});
+            return CreatedAtAction(nameof(Register), new { user.Id, user.UserName, user.Role });
         }
-        [AllowAnonymous]
+
         [EnableRateLimiting("login")]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == dto.UserName);
+            if (dto == null) return BadRequest();
+            var userName = dto.UserName?.Trim();
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == userName);
             if (user == null)
                 return Unauthorized("Invalid username or password.");
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);

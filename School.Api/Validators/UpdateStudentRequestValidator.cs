@@ -13,11 +13,11 @@ namespace School.Api.Validators
 
             RuleFor(x => x.Age)
                 .InclusiveBetween(5, 18)
-                .When(x => x.Age.HasValue);
+                .When(x => x.Age !=0);
 
             RuleFor(x => x.CID)
                 .GreaterThan(0)
-                .When(x => x.CID.HasValue);
+                .When(x => x.CID !=0);
         }
 
     }
