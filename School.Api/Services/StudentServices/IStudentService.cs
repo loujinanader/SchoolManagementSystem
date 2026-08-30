@@ -5,10 +5,10 @@ namespace School.Api.Services.StudentServices
 {
     public interface IStudentService
     {
-        Task<IEnumerable<StudentDto>> GetAllStudentsAsync();
-        Task<StudentDto?> GetStudentByIdAsync(int id);
-        Task<StudentDto> CreateStudentAsync(CreateStudentRequest request);
-        Task<StudentDto?> UpdateStudentAsync(int id, UpdateStudentDto dto);
-        Task<bool> DeleteStudentAsync(int id);
+       public Task<IEnumerable<StudentDto>> GetAllStudentsAsync();
+        public Task<StudentDto?> GetStudentByIdAsync(int id);
+        public Task<StudentDto> CreateStudentAsync(CreateStudentRequest request);
+        public Task<StudentDto?> UpdateStudentAsync(int id, UpdateStudentDto dto);
+        public Task<bool> DeleteStudentAsync(int id);
     }
 }

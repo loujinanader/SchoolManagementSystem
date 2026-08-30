@@ -5,10 +5,10 @@ namespace School.Api.Repository.StudentRepository
 {
     public interface IStudentRepository
     {
-        Task<IEnumerable<Student>> GetAllStudentsAsync();
-        Task<Student?> GetStudentByIdAsync(int id);
-        Task<Student> CreateStudentAsync(Student student);
-        Task<Student?> UpdateStudentAsync(int id, UpdateStudentDto dto);
-        Task<bool> DeleteStudentAsync(int id);
+        public Task<IEnumerable<Student>> GetAllStudentsAsync();
+        public Task<Student?> GetStudentByIdAsync(int id);
+        public Task<Student> CreateStudentAsync(Student student);
+        public Task<Student?> UpdateStudentAsync(int id, UpdateStudentDto dto);
+        public Task<bool> DeleteStudentAsync(int id);
     }
 }

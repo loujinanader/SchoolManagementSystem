@@ -10,9 +10,7 @@ namespace School.Api.Controllers
     public class StudentsController : ControllerBase
     {
         private readonly IStudentService _service;
-
         public StudentsController(IStudentService service) =>  _service = service;
-
         // GET api/Students
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StudentDto>>> GetAll()
@@ -20,7 +18,6 @@ namespace School.Api.Controllers
             var students = await _service.GetAllStudentsAsync();
             return Ok(students);
         }
-
         // GET api/Students/5
         [HttpGet("{id}")]
         public async Task<ActionResult<StudentDto>> GetStudentById(int id)

@@ -19,7 +19,6 @@ namespace School.Api.Repository.StudentRepository
         {
             if (!await _db.ClassRooms.AnyAsync(c => c.ClassId == student.CID))
                 throw new ArgumentException("The specified class does not exist.");
-
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
             return student;
