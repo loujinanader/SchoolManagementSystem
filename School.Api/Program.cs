@@ -50,6 +50,8 @@ if (string.IsNullOrEmpty(jwtKey))
         "JWT key is not configured.");
 }
 
+builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
+
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

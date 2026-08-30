@@ -73,5 +73,7 @@ namespace School.Api.Services.StudentServices
             await _repository.RemoveStudentAsync(student);
             return true;
         }
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync(string? name, int? age, string? sortBy, int page, int pageSize) =>
+          await _repository.GetAllStudentsAsync(name, age, sortBy, page, pageSize);
     }
 }

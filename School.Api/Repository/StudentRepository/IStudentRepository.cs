@@ -12,5 +12,8 @@ namespace School.Api.Repository.StudentRepository
         public Task RemoveStudentAsync(Student student);
         public Task <bool> ClassRoomExistAsync(int ClassId);
         public Task SaveChangesAsync();
+        public  Task<IEnumerable<Student>> GetAllStudentsAsync(string? name,int? age,string? sortBy,int page,int pageSize);
+
+
     }
 }

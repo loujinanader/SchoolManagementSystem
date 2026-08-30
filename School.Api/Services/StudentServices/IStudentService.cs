@@ -1,5 +1,6 @@
 ﻿using School.Api.DTO.Request;
 using School.Api.DTO.Response;
+using School.Api.Models.Student;
 
 namespace School.Api.Services.StudentServices
 {
@@ -10,5 +11,6 @@ namespace School.Api.Services.StudentServices
         public Task<StudentDto> CreateStudentAsync(CreateStudentRequest request);
         public Task<StudentDto?> UpdateStudentAsync(int id, UpdateStudentDto dto);
         public Task<bool> DeleteStudentAsync(int id);
+        
     }
 }

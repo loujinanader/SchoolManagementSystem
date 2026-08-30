@@ -2,6 +2,7 @@
 using School.Api.Data;
 using School.Api.DTO.Request;
 using School.Api.Models.Student;
+using System.Globalization;
 
 namespace School.Api.Repository.StudentRepository
 {
@@ -53,6 +54,18 @@ namespace School.Api.Repository.StudentRepository
 
         public Task<bool> ClassRoomExistAsync(int classId) =>
              _db.ClassRooms.AnyAsync(c => c.ClassId == classId);
-        
+        public async Task<IEnumerable<Student>> GetAllStudentsAsync(string? name, int? age, string? sortBy, int page, int pageSize)
+        {
+            { var query = _db.Students.Include(s => s.ClassRoom).AsQueryable(); 
+                if (!string.IsNullOrWhiteSpace(name)) query = query.Where(s => s.StudentName.Contains(name)); 
+                if (age.HasValue) query = query.Where(s => s.Age == age.Value); query = sortBy?.ToLower() switch { "name" => query.OrderBy(s => s.StudentName), "age" => query.OrderBy(s => s.Age), _ => query.OrderBy(s => s.StudentID) }; 
+                
+                query = query.Skip((page - 1) * pageSize).Take(pageSize);
+                return await query.ToListAsync(); 
+            }
+        }
+
+
+
     }
 }
