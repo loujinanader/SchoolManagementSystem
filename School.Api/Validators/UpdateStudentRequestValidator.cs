@@ -8,14 +8,17 @@ namespace School.Api.Validators
         public UpdateStudentValidator()
         {
             RuleFor(x => x.StudentName)
-                .NotEmpty()
-                .MaximumLength(50);
+                .MaximumLength(50)
+                .When(x => x.StudentName != null);
 
             RuleFor(x => x.Age)
-                .InclusiveBetween(5, 18);
+                .InclusiveBetween(5, 18)
+                .When(x => x.Age.HasValue);
 
             RuleFor(x => x.CID)
-                .GreaterThan(0);
+                .GreaterThan(0)
+                .When(x => x.CID.HasValue);
         }
+
     }
 }

@@ -8,6 +8,9 @@ using School.Api.Models.Authentication;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.EntityFrameworkCore;
+
 namespace School.Api.Controllers
 {
     [ApiController]
@@ -27,37 +30,38 @@ namespace School.Api.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto dto)
         {
+            var userName = dto.UserName.Trim();
             if (_db.Users.Any(u => u.UserName == dto.UserName))
                 return Conflict("Username already exists.");
             var user = new User
             {
                 UserName = dto.UserName,
-                Role = "User"
+                Role = isFirstUser ? "Admin" : "User"
             };
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
             _db.Users.Add(user);
-            _db.SaveChanges();
-            return Ok(new{user.Id, user.UserName,user.Role });
+            await _db.SaveChangesAsync();
+            return CreatedAtAction(nameof(Register), new{user.Id,user.UserName,user.Role});
         }
         [AllowAnonymous]
+        [EnableRateLimiting("login")]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto dto)
         {
-            var user = _db.Users.FirstOrDefault(u => u.UserName == dto.UserName);
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.UserName == dto.UserName);
             if (user == null)
                 return Unauthorized("Invalid username or password.");
             var result = _passwordHasher.VerifyHashedPassword(user, user.PasswordHash, dto.Password);
             if (result == PasswordVerificationResult.Failed)
                 return Unauthorized("Invalid username or password.");
             var token = GenerateToken(user);
-            return Ok(new{token = GenerateToken(user)});
+            return Ok(new { token });
         }
         private string GenerateToken(User user)
         {
             var key = _configuration["Jwt:Key"];
             if (string.IsNullOrEmpty(key))
-                throw new InvalidOperationException(
-                    "JWT key is not configured.");
+                throw new InvalidOperationException("JWT key is not configured.");
             var claims = new[]
             {
                 new Claim( ClaimTypes.Name,user.UserName),
@@ -65,7 +69,11 @@ namespace School.Api.Controllers
             };
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var token = new JwtSecurityToken( issuer: _configuration["Jwt:Issuer"],claims: claims,expires: DateTime.UtcNow.AddHours(1),signingCredentials: credentials);
+            var token = new JwtSecurityToken(
+               issuer: _configuration["Jwt:Issuer"],
+               claims: claims,
+               expires: DateTime.UtcNow.AddHours(1),
+               signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }

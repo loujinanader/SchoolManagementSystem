@@ -31,22 +31,47 @@ namespace School.Api.Services.StudentServices
 
         public async Task<StudentDto> CreateStudentAsync(CreateStudentRequest request)
         {
+            if (!await _repository.ClassRoomExistAsync(request.CID))
+                throw new ArgumentException("This Class doesn't exits");
             var student = _mapper.Map<Student>(request);
-            var created = await _repository.CreateStudentAsync(student);
-            var withClassRoom = await _repository.GetStudentByIdAsync(created.StudentID);
+            await _repository.CreateStudentAsync(student);
+            var withClassRoom = await _repository.GetStudentByIdAsync(student.StudentID);
             return _mapper.Map<StudentDto>(withClassRoom!);
         }
 
         public async Task<StudentDto?> UpdateStudentAsync(int id, UpdateStudentDto dto)
         {
-            var updated = await _repository.UpdateStudentAsync(id, dto);
-            if (updated == null)
+            var student = await _repository.GetStudentByIdAsync(id);
+            if (student == null)
                 return null;
 
-            var withClassRoom = await _repository.GetStudentByIdAsync(id);
-            return _mapper.Map<StudentDto>(withClassRoom);
+            if (!string.IsNullOrWhiteSpace(dto.StudentName))
+                student.StudentName = dto.StudentName;
+
+            if (dto.Age.HasValue)
+                student.Age = dto.Age.Value;
+
+            if (dto.CID.HasValue)
+            {
+                if (!await _repository.ClassRoomExistAsync(dto.CID.Value))
+                    throw new ArgumentException("The specified class does not exist.");
+                student.CID = dto.CID.Value;
+            }
+
+            await _repository.SaveChangesAsync();
+
+            var updated = await _repository.GetStudentByIdAsync(id);
+            return _mapper.Map<StudentDto>(updated);
         }
 
-        public Task<bool> DeleteStudentAsync(int id) => _repository.DeleteStudentAsync(id);
+        public async Task<bool> DeleteStudentAsync(int id)
+        {
+            var student = await _repository.GetStudentByIdAsync(id);
+            if (student == null)
+                return false;
+
+            await _repository.RemoveStudentAsync(student);
+            return true;
+        }
     }
 }

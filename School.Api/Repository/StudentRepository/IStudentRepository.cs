@@ -9,6 +9,8 @@ namespace School.Api.Repository.StudentRepository
         public Task<Student?> GetStudentByIdAsync(int id);
         public Task<Student> CreateStudentAsync(Student student);
         public Task<Student?> UpdateStudentAsync(int id, UpdateStudentDto dto);
-        public Task<bool> DeleteStudentAsync(int id);
+        public Task RemoveStudentAsync(Student student);
+        public Task <bool> ClassRoomExistAsync(int ClassId);
+        public Task SaveChangesAsync();
     }
 }

@@ -8,31 +8,23 @@ namespace School.Api.Repository.StudentRepository
     public class StudentRepository : IStudentRepository
     {
         private readonly SchoolDbContext _db;
-
         public StudentRepository(SchoolDbContext db) => _db = db;
-
         public async Task<IEnumerable<Student>> GetAllStudentsAsync() => await _db.Students.Include(s => s.ClassRoom).ToListAsync();
 
         public async Task<Student?> GetStudentByIdAsync(int id) => await _db.Students.Include(s => s.ClassRoom).FirstOrDefaultAsync(s => s.StudentID == id);
 
         public async Task<Student> CreateStudentAsync(Student student)
         {
-            if (!await _db.ClassRooms.AnyAsync(c => c.ClassId == student.CID))
-                throw new ArgumentException("The specified class does not exist.");
             _db.Students.Add(student);
             await _db.SaveChangesAsync();
             return student;
         }
 
-        public async Task<bool> DeleteStudentAsync(int id)
+        public async Task  RemoveStudentAsync(Student student)
         {
-            var student = await _db.Students.FirstOrDefaultAsync(s => s.StudentID == id);
-            if (student == null)
-                return false;
-
             _db.Students.Remove(student);
             await _db.SaveChangesAsync();
-            return true;
+
         }
 
         public async Task<Student?> UpdateStudentAsync(int id, UpdateStudentDto dto)
@@ -57,5 +49,7 @@ namespace School.Api.Repository.StudentRepository
             await _db.SaveChangesAsync();
             return student;
         }
+        public Task<bool> ClassRoomExistsAsync(int classId) => _db.ClassRooms.AnyAsync(c => c.ClassId == classId);
+        public Task SaveChangesAsync() => _db.SaveChangesAsync();
     }
 }

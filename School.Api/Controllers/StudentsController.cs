@@ -30,6 +30,7 @@ namespace School.Api.Controllers
         }
 
         // POST api/Students
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<ActionResult<StudentDto>> CreateStudent(CreateStudentRequest dto)
         {
@@ -38,6 +39,7 @@ namespace School.Api.Controllers
         }
 
         // PATCH api/Students/5
+        [Authorize(Roles = "Admin")]
         [HttpPatch("{id}")]
         public async Task<ActionResult<StudentDto>> UpdateStudent(int id, UpdateStudentDto dto)
         {
@@ -49,6 +51,7 @@ namespace School.Api.Controllers
 
         // DELETE api/Students/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteStudent(int id)
         {
             var deleted = await _service.DeleteStudentAsync(id);

@@ -5,7 +5,7 @@ namespace School.Api.DTO.Request
     {
         //[Required]
         [StringLength(50)]
-        public string StudentName { get; set; } = string.Empty;
+        public string? StudentName { get; set; } = string.Empty;
         [Range(5, 18)]
         public int? Age { get; set; }
         // [Required]

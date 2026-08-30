@@ -1,8 +1,13 @@
-﻿namespace School.Api.DTO.authentication
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace School.Api.DTO.authentication
 {
     public class LoginDto
     {
+        [Required]
         public string UserName { get; set; } = string.Empty;
+        [Required]
         public string Password { get; set; } = string.Empty;
+
     }
 }
